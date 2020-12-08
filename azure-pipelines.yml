@@ -26,3 +26,15 @@ steps:
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pulish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+  inputs: 
+    command: publish
+    publishWebProjects: false
+    projects: 'DevOpsApiDemo/DevOpsApiDemo.csproj'
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'pulish artifacts'
